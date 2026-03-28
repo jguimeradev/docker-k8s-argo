@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>User Management System</h1>
+        <p>A simple list of registered users.</p>
+        
+        <div id="loading" class="loading">Fetching data...</div>
+        
+        <table id="userTable" class="hidden">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="userList">
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
+        
+        <div id="userDetail" class="user-detail hidden">
+            <h2>User Details</h2>
+            <div id="detailContent"></div>
+            <button onclick="hideDetails()">Back to List</button>
+        </div>
+        
+        <div id="error" class="error hidden"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
