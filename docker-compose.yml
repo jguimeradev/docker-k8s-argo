@@ -1,0 +1,22 @@
+services:
+  backend_service:
+    build: ./back
+    container_name: backend_service
+    # No ports mapping here = Backend is hidden from the internet
+    networks:
+      - app_net
+    restart: always
+
+  frontend_service:
+    build: ./front
+    container_name: frontend_service
+    ports:
+      - "8888:80" # Exposed to the world
+    networks:
+      - app_net
+    depends_on:
+      - backend_service
+
+networks:
+  app_net:
+    driver: bridge  

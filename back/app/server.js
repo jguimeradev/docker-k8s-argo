@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // Serve static files from the 'front' directory
-app.use(express.static(path.join(__dirname, '../front')));
+app.use(express.static(path.join(__dirname, '../front/app')));
 
 // Set up SQLite database
 const db = new sqlite3.Database(':memory:'); // Using memory for simplicity, replace with file for persistence
@@ -25,8 +25,8 @@ db.serialize(() => {
 
   const stmt = db.prepare("INSERT INTO users (name, email) VALUES (?, ?)");
   const users = [
-    ["Alice Johnson", "alice@example.com"],
-    ["Bob Smith", "bob@example.com"],
+    ["Scarlett Johnson", "scarlett@example.com"],
+    ["Gabbie Carter", "gabbie@example.com"],
     ["Charlie Brown", "charlie@example.com"],
     ["Diana Prince", "diana@example.com"],
     ["Edward Norton", "edward@example.com"]
@@ -64,6 +64,6 @@ app.get('/user/:id', (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server running on port ${port}`);
 });
