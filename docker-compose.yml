@@ -5,7 +5,6 @@ services:
     # No ports mapping here = Backend is hidden from the internet
     networks:
       - app_net
-    restart: always
 
   frontend_service:
     build: ./front
@@ -16,6 +15,7 @@ services:
       - app_net
     depends_on:
       - backend_service
+
 
 networks:
   app_net:

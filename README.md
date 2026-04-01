@@ -31,39 +31,38 @@ The REST API follows standard HTTP conventions:
 
 ## Frontend-Backend Communication
 
-The application uses a **decoupled communication model** via the Fetch API:
+The application uses a **decoupled communication model** where the frontend communicates with the backend via an Nginx proxy.
 
-1. **Initial Load**: 
-   - When `index.html` loads, `script.js` triggers `fetchUsers()`.
-   - It sends an asynchronous `GET` request to `http://localhost:3000/users`.
-   - Once the JSON response arrives, JavaScript dynamically generates table rows (`<tr>`) and injects them into the DOM.
+1.  **Initial Load**:
+    -   When `index.html` loads, `script.js` triggers `fetchUsers()`.
+    -   It sends an asynchronous `GET` request to `/api/users`.
+    -   Nginx, running in the `frontend_service`, proxies this request to the `backend_service`.
+    -   Once the JSON response arrives, JavaScript dynamically generates table rows (`<tr>`) and injects them into the DOM.
 
-2. **User Details**: 
-   - Clicking "View Detail" triggers `viewUser(id)`.
-   - This sends a targeted request to `/user/{id}`.
-   - The UI then switches views (hiding the table and showing the detail card) using CSS classes.
+2.  **User Details**:
+    -   Clicking "View Detail" triggers `viewUser(id)`.
+    -   This sends a targeted request to `/api/user/{id}`.
+    -   The UI then switches views (hiding the table and showing the detail card) using CSS classes.
 
 ---
 
 ## How to Run
 
-1. **Navigate to the backend directory**:
-   ```bash
-   cd back
-   ```
+This application is designed to be run with Docker.
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+1.  **Build and run the application**:
+    ```bash
+    docker-compose up --build
+    ```
 
-3. **Start the server**:
-   ```bash
-   node server.js
-   ```
+2.  **Access the application**:
+    Open [http://localhost:8888](http://localhost:8888) in your browser.
 
-4. **Access the application**:
-   Open [http://localhost:3000](http://localhost:3000) in your browser.
+3.  **Stop the application**:
+    ```bash
+    docker-compose down
+    ```
+
 
 ---
 
