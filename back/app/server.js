@@ -25,7 +25,7 @@ db.serialize(() => {
 
   const stmt = db.prepare("INSERT INTO users (name, email) VALUES (?, ?)");
   const users = [
-    ["Scarlett Johnson", "scarlett@example.com"],
+    ["Scarlett Johansson", "scarlett@example.com"],
     ["Gabbie Carter", "gabbie@example.com"],
     ["Charlie Brown", "charlie@example.com"],
     ["Diana Prince", "diana@example.com"],
