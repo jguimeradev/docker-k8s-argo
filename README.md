@@ -48,6 +48,8 @@ The application uses a **decoupled communication model** where the frontend comm
 
 ## How to Run
 
+### Docker (Local Development)
+
 This application is designed to be run with Docker.
 
 1.  **Build and run the application**:
@@ -63,6 +65,51 @@ This application is designed to be run with Docker.
     docker-compose down
     ```
 
+### Kubernetes (Orchestration)
+
+The project includes Kubernetes manifests for deploying the stack to a cluster (e.g., Minikube).
+
+#### Manifest Details
+
+The application is orchestrated using two primary manifest files:
+
+1.  **`kubernetes/backend-deployment.yml`**:
+    *   **Deployment**: Manages the `backend` pod. It uses the `docker-backend_service:latest` image and exposes port `3000`.
+    *   **Service**: A `ClusterIP` service named `backend`. This provides a stable internal DNS name (`http://backend:3000`) that the frontend container uses to communicate with the API. It is not accessible from outside the cluster.
+
+2.  **`kubernetes/frontend-deployment.yml`**:
+    *   **Deployment**: Manages the `frontend` pod (Nginx serving the static files). It uses the `docker-frontend_service:latest` image and exposes port `80`.
+    *   **Service**: A `NodePort` service named `frontend`. It maps the internal port `80` to the external port `30080` on all cluster nodes, allowing external access to the web interface.
+
+#### Deployment Steps
+
+1.  **Point your shell to Minikube's Docker daemon** (to use local images):
+    ```bash
+    eval $(minikube docker-env)
+    ```
+
+2.  **Build the images**:
+    ```bash
+    docker compose build
+    ```
+
+3.  **Apply the manifests**:
+    ```bash
+    kubectl apply -f kubernetes/backend-deployment.yml
+    kubectl apply -f kubernetes/frontend-deployment.yml
+    ```
+
+4.  **Access the application**:
+    Get the Minikube IP and access the frontend via the NodePort (30080):
+    ```bash
+    minikube service frontend --url
+    ```
+    Or manually: `http://$(minikube ip):30080`
+
+5.  **Clean up**:
+    ```bash
+    kubectl delete -f kubernetes/
+    ```
 
 ---
 
